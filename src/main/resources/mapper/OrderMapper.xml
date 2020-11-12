@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper SYSTEM "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.lastingwar.gmall.publisher.mapper.OrderMapper">
+<!--    查询GMV的总计-->
+    <select id="selectOrderAmountTotal" resultType="java.lang.Double">
+         select sum(total_amount) sum_amount from gmall2020_order_info where create_date=#{date}
+    </select>
+<!--    查询小时统计的GMV-->
+    <select id="selectOrderAmountHourMap" resultMap="orderAmountHour" >
+        select create_hour, cast(sum(total_amount) as double) sum_amount from gmall2020_order_info where create_date=#{date}  group by create_hour
+
+    </select>
+    <resultMap id="orderAmountHour" type="java.util.Map" autoMapping="true">
+    </resultMap>
+</mapper>
